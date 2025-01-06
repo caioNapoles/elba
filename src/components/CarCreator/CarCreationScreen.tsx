@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, InputGroup, Alert } from "react-bootstrap";
-import Car from "../../class/Car";
+import CarClass from "../../class/CarClass";
 
 const CarCreationScreen = () => {
   const [carName, setCarName] = useState("");
@@ -13,7 +13,7 @@ const CarCreationScreen = () => {
 
   const handleSubmit = () => {
     try {
-      const newCar = new Car(
+      const newCar = new CarClass(
         carName,
         gasHighwayConsumption,
         gasCityConsumption,

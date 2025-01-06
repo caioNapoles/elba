@@ -1,4 +1,4 @@
-class Car {
+class CarClass {
   name: string;
   gasHighwayConsumption: number;
   gasCityConsumption: number;
@@ -69,4 +69,4 @@ class Car {
   }
 }
 
-export default Car;
+export default CarClass;

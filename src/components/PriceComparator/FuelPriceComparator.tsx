@@ -1,36 +1,29 @@
 import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  Button,
-  Container,
-  Dropdown,
-  DropdownButton,
-  Form,
-  Stack,
-} from "react-bootstrap";
-import Car from "../../class/Car";
+import { Alert, Button, Container, Form, Stack } from "react-bootstrap";
+import CarClass from "../../class/CarClass";
+import { Car, CircleHelp } from "lucide-react";
 
 export const FuelPriceComparator = () => {
-  const noCar = new Car();
+  const noCar = new CarClass();
   noCar.name = "Select a car";
 
-  const [carList, setCarList] = useState<Car[]>([]);
+  const [carList, setCarList] = useState<CarClass[]>([]);
   const [ethanolPrice, setEthanolPrice] = useState<number>(0);
   const [gasPrice, setGasPrice] = useState<number>(0);
   const [roadtripMode, setRoadtripMode] = useState<boolean>(false);
-  const [currentCar, setCurrentCar] = useState<Car>(noCar);
+  const [currentCar, setCurrentCar] = useState<CarClass>(noCar);
   const [result, setResult] = useState<string>("");
   const [resultWindow, setResultWindow] = useState<boolean>(false);
   const [error, setError] = useState("");
   const [errorWindow, setErrorWindow] = useState<boolean>(false);
 
   useEffect(() => {
-    const cars: Car[] = [];
+    const cars: CarClass[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key) {
         const carString = localStorage.getItem(key);
-        const car = new Car();
+        const car = new CarClass();
         car.readStringToCar(carString || "");
         if (car) {
           cars.push(car);
@@ -91,21 +84,25 @@ export const FuelPriceComparator = () => {
     <div>
       <Container>
         <Stack gap={3}>
-          <h1>Fuel Price Comparator</h1>
           <Stack direction="horizontal" gap={3}>
-            <h4>Current car:</h4>
-            <DropdownButton
-              id="dropdown-variants-secondary"
-              title={currentCar.name || "Select a car"}
-              variant="secondary"
-              onSelect={handleSelect}
+            <h1>Fuel Price Comparator</h1>
+            <Button variant="outline-secondary">
+              <CircleHelp />
+            </Button>
+          </Stack>
+          <Stack direction="horizontal" gap={3}>
+            <Car />
+            <Form.Select
+              value={carList.indexOf(currentCar)}
+              onChange={(e) => handleSelect(e.target.value)}
             >
+              <option value="-1">Select a car</option>
               {carList.map((car, index) => (
-                <Dropdown.Item key={index} eventKey={index.toString()}>
+                <option key={index} value={index}>
                   {car.name}
-                </Dropdown.Item>
+                </option>
               ))}
-            </DropdownButton>
+            </Form.Select>
           </Stack>
           <Form.Group controlId="ethanolPrice">
             <Form.Label>Ethanol Price</Form.Label>

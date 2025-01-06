@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Form, InputGroup, Alert } from "react-bootstrap";
 import Car from "../../class/Car";
+import "./CarCreationScreen.css";
 
 const CarCreationScreen = () => {
   const [carName, setCarName] = useState("");
@@ -33,7 +34,8 @@ const CarCreationScreen = () => {
   };
 
   return (
-    <>
+    <div className="screen">
+    <div className="carCreation">
       <h1>New Car</h1>
       <Alert
         show={alert}
@@ -45,57 +47,77 @@ const CarCreationScreen = () => {
       </Alert>
       <Form>
         <Form.Group className="mb-3" controlId="carName">
-          <Form.Label>Car name</Form.Label>
+          <div className="carName">
+          <span className="overTextForm">Car Name</span>
+
           <Form.Control
             placeholder="Mom's Civic"
             value={carName}
             onChange={(e) => setCarName(e.target.value)}
           />
+          </div>
         </Form.Group>
+        <span className="line"></span>
+        <Form.Label className="mt-2">Gas Consumption</Form.Label>
 
-        <Form.Label>Gas Consumption</Form.Label>
+        <div className="input-with-unit">
+          <InputGroup className="mt-2">
+            
+            <span className="overTextForm">City</span>
+            <Form.Control
+              className="rounded"
+              type="number"
+              value={gasCityConsumption}
+              onChange={(e) => setGasCityConsumption(Number(e.target.value))}
+            />
+            <span className="unit">km/L</span>
+          </InputGroup>
+        </div>
 
-        <InputGroup>
-          <InputGroup.Text id="inputGroup-sizing-default">City</InputGroup.Text>
-          <Form.Control
-            type="number"
-            value={gasCityConsumption}
-            onChange={(e) => setGasCityConsumption(Number(e.target.value))}
-          />
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Highway
-          </InputGroup.Text>
-          <Form.Control
-            type="number"
-            value={gasHighwayConsumption}
-            onChange={(e) => setGasHighwayConsumption(Number(e.target.value))}
-          />
-          <InputGroup.Text id="inputGroup-sizing-default">km/L</InputGroup.Text>
-        </InputGroup>
+        <div className="input-with-unit mt-2">
+          <InputGroup className="mt-3">
+            <span className="overTextForm">Highway</span>
+            
+            <Form.Control
+              className="rounded"
+              type="number"
+              value={gasHighwayConsumption}
+              onChange={(e) => setGasHighwayConsumption(Number(e.target.value))}
+            />
+            <span className="unit">km/L</span>
+          </InputGroup>
+        </div>
 
-        <Form.Label>Ethanol Consumption</Form.Label>
-        <InputGroup>
-          <InputGroup.Text id="inputGroup-sizing-default">City</InputGroup.Text>
-          <Form.Control
-            type="number"
-            value={ethanolCityConsumption}
-            onChange={(e) => setEthanolCityConsumption(Number(e.target.value))}
-          />
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Highway
-          </InputGroup.Text>
-          <Form.Control
-            type="number"
-            value={ethanolHighwayConsumption}
-            onChange={(e) =>
-              setEthanolHighwayConsumption(Number(e.target.value))
-            }
-          />
-          <InputGroup.Text id="inputGroup-sizing-default">km/L</InputGroup.Text>
-        </InputGroup>
+        <Form.Label className="mt-3">Ethanol Consumption</Form.Label>
+        <div className="input-with-unit">
+          <InputGroup className="mt-3">
+            <span className="overTextForm">City</span>
+            <Form.Control
+              className="rounded"
+              type="number"
+              value={ethanolCityConsumption}
+              onChange={(e) => setEthanolCityConsumption(Number(e.target.value))}
+            />
+            <span className="unit">km/L</span>
+          </InputGroup>
+        </div>
+
+        <div className="input-with-unit mt-2">
+          <InputGroup className="mt-3">
+            <span className="overTextForm">Highway</span>
+            <Form.Control
+              className="rounded"
+              type="number"
+              value={ethanolHighwayConsumption}
+              onChange={(e) => setEthanolHighwayConsumption(Number(e.target.value))}
+            />
+            <span className="unit">km/L</span>
+          </InputGroup>
+        </div>
       </Form>
-      <Button onClick={handleSubmit}>Save Car</Button>
-    </>
+      <Button className="saveBtn" onClick={handleSubmit}>Save Car</Button>
+    </div>
+    </div>
   );
 };
 

@@ -1,0 +1,90 @@
+.screen {
+        width: 100%;
+        display: flex;
+}
+
+
+.carCreation {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+.saveBtn{
+    margin-top: 2rem;
+    width: 100px;
+    height: 40px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.input-with-unit {
+    position: relative;
+    max-width: 546px;
+  }
+  
+.input-with-unit input {
+    padding-right: 6rem;
+    width: 700px;    
+}
+  
+.input-with-unit .unit {
+    position: absolute;
+    right: 0.5em;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6c757d; /* Cor do texto */
+  }
+
+.overTextForm{
+    font-size: 0.8rem;
+    background-color: white;
+    position: absolute;
+    top: -.7rem;
+    left: 1rem;
+    z-index: 10;
+    padding: 0 0.2rem 0 0.2rem;  
+}
+
+.input-with-unit input:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: initial; /* Ajuste conforme necessário */
+}
+
+.carName {
+    position: relative;
+    margin-top: 1rem;
+}
+
+.line {
+    display: block;
+    border-top: #e0e4e7 solid 1px;
+
+}
+
+.carName input:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: initial; /* Ajuste conforme necessário */
+  }

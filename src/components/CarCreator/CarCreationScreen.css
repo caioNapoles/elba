@@ -1,6 +1,6 @@
 .screen {
-        width: 100%;
-        display: flex;
+    width: 100%;
+    display: flex;
 }
 
 
@@ -9,28 +9,26 @@
     flex-direction: column;
     align-items: start;
     justify-content: start;
-    height: 100vh;
+    height: 100%;
     margin: 0 auto;
     width: 100%;
 }
 
-
-
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
-.carCreation form{
-    width: 100%;  
+.carCreation form {
+    width: 100%;
 }
 
-.saveBtn{
+.saveBtn {
     margin-top: 2rem;
     width: 100px;
     height: 40px;
@@ -43,37 +41,31 @@ input[type=number] {
 
 .input-with-unit {
     position: relative;
-    /* max-width: 546px; */
-  }
-  
-.input-with-unit input {
-    /* padding-right: 6rem; */
-    /* width: 700px;     */
 }
-  
+
 .input-with-unit .unit {
     position: absolute;
     right: 0.5em;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: #6c757d; /* Cor do texto */
-  }
+    color: #6c757d;
+}
 
-.overTextForm{
+.overTextForm {
     font-size: 0.8rem;
     background-color: white;
     position: absolute;
     top: -.7rem;
     left: 1rem;
     z-index: 10;
-    padding: 0 0.2rem 0 0.2rem;  
+    padding: 0 0.2rem 0 0.2rem;
 }
 
 .input-with-unit input:focus {
     outline: none;
     box-shadow: none;
-    border-color: initial; /* Ajuste conforme necessário */
+    border-color: initial;
 }
 
 .carName {
@@ -90,5 +82,5 @@ input[type=number] {
 .carName input:focus {
     outline: none;
     box-shadow: none;
-    border-color: initial; /* Ajuste conforme necessário */
-  }
+    border-color: initial;
+}

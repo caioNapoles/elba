@@ -14,7 +14,7 @@ const NavBar= () => {
 
 
   return (
-    <Stack>
+    <Stack style={{marginTop:"2rem"}}>
       <ComponentHub currentScreen={screen} />
       <ToggleButtonGroup
         type="radio"

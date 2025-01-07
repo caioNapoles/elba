@@ -11,6 +11,7 @@
     justify-content: start;
     height: 100vh;
     margin: 0 auto;
+    width: 100%;
 }
 
 
@@ -25,6 +26,9 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.carCreation form{
+    width: 100%;  
+}
 
 .saveBtn{
     margin-top: 2rem;
@@ -39,12 +43,12 @@ input[type=number] {
 
 .input-with-unit {
     position: relative;
-    max-width: 546px;
+    /* max-width: 546px; */
   }
   
 .input-with-unit input {
-    padding-right: 6rem;
-    width: 700px;    
+    /* padding-right: 6rem; */
+    /* width: 700px;     */
 }
   
 .input-with-unit .unit {

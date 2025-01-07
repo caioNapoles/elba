@@ -1,19 +1,26 @@
 import { Fuel, MapPinned, CarFront, Settings } from "lucide-react";
-import { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
-  ButtonGroup,
-  Button,
+  Stack,
   ToggleButton,
   ToggleButtonGroup,
 } from "react-bootstrap";
+import { ComponentHub } from "./ComponentHub";
 
-const NavBar = () => {
+
+
+const NavBar= () => {
+  const [screen, setScreen] = useState<number>(1);
+
+
   return (
-    <div>
+    <Stack>
+      <ComponentHub currentScreen={screen} />
       <ToggleButtonGroup
         type="radio"
         name="options"
         defaultValue={1}
+        onChange={(val: number) => setScreen(val)}
         style={{
           position: "fixed",
           bottom: "0",
@@ -25,6 +32,7 @@ const NavBar = () => {
           value={1}
           variant="secondary"
           style={{ borderRadius: 0 }}
+          
         >
           <Fuel />
         </ToggleButton>
@@ -46,7 +54,7 @@ const NavBar = () => {
           <Settings />
         </ToggleButton>
       </ToggleButtonGroup>
-    </div>
+    </Stack>
   );
 };
 

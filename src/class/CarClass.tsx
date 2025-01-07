@@ -1,4 +1,4 @@
-class Car {
+class CarClass {
   name: string;
   gasHighwayConsumption: number;
   gasCityConsumption: number;
@@ -6,11 +6,11 @@ class Car {
   ethanolCityConsumption: number;
 
   constructor(
-    name: string,
-    gasHighwayConsumption: number,
-    gasCityConsumption: number,
-    ethanolHighwayConsumption: number,
-    ethanolCityConsumption: number
+    name: string = "",
+    gasHighwayConsumption: number = 0,
+    gasCityConsumption: number = 0,
+    ethanolHighwayConsumption: number = 0,
+    ethanolCityConsumption: number = 0
   ) {
     this.name = name;
     this.gasHighwayConsumption = gasHighwayConsumption;
@@ -21,6 +21,15 @@ class Car {
 
   stringfy() {
     return JSON.stringify(this);
+  }
+
+  readStringToCar(string: string) {
+    const car = JSON.parse(string);
+    this.name = car.name;
+    this.gasHighwayConsumption = car.gasHighwayConsumption;
+    this.gasCityConsumption = car.gasCityConsumption;
+    this.ethanolHighwayConsumption = car.ethanolHighwayConsumption;
+    this.ethanolCityConsumption = car.ethanolCityConsumption;
   }
 
   stringfyAndStore() {
@@ -54,9 +63,10 @@ class Car {
       this.ethanolHighwayConsumption === 0
     ) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 }
 
-export default Car;
+export default CarClass;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Button, Container, Form, Stack } from "react-bootstrap";
 import CarClass from "../../class/CarClass";
 import { Car, CircleHelp } from "lucide-react";
@@ -76,78 +76,81 @@ export const FuelPriceComparator = () => {
       setResultWindow(true);
     } catch (error) {
       setError((error as Error).message);
+
+      if ((error as Error).message === "car is undefined") {
+        setError("Please select a car!");
+      }
+
       setErrorWindow(true);
     }
   };
 
   return (
-    <div>
-      <Container>
-        <Stack gap={3}>
-          <Stack direction="horizontal" gap={3}>
-            <h1>Fuel Price Comparator</h1>
-            <Button variant="outline-secondary">
-              <CircleHelp />
-            </Button>
-          </Stack>
-          <Stack direction="horizontal" gap={3}>
-            <Car />
-            <Form.Select
-              value={carList.indexOf(currentCar)}
-              onChange={(e) => handleSelect(e.target.value)}
-            >
-              <option value="-1">Select a car</option>
-              {carList.map((car, index) => (
-                <option key={index} value={index}>
-                  {car.name}
-                </option>
-              ))}
-            </Form.Select>
-          </Stack>
-          <Form.Group controlId="ethanolPrice">
-            <Form.Label>Ethanol Price</Form.Label>
-            <Form.Control
-              type="number"
-              value={ethanolPrice}
-              onChange={(e) => setEthanolPrice(Number(e.target.value))}
-            />
-            <Form.Label>Gas Price</Form.Label>
-            <Form.Control
-              type="number"
-              value={gasPrice}
-              onChange={(e) => setGasPrice(Number(e.target.value))}
+    <Container>
+      <Stack gap={3}>
+        <Stack direction="horizontal" gap={3}>
+          <h1>Fuel Price Comparator</h1>
+          <Button variant="outline-secondary">
+            <CircleHelp />
+          </Button>
+        </Stack>
+        <Stack direction="horizontal" gap={3}>
+          <Car />
+          <Form.Select
+            value={carList.indexOf(currentCar)}
+            onChange={(e) => handleSelect(e.target.value)}
+          >
+            <option>Select a car</option>
+            {carList.map((car, index) => (
+              <option key={index} value={index}>
+                {car.name}
+              </option>
+            ))}
+          </Form.Select>
+        </Stack>
+        <Form.Group controlId="ethanolPrice">
+          <Form.Label>Ethanol Price</Form.Label>
+          <Form.Control
+            type="number"
+            value={ethanolPrice}
+            onChange={(e) => setEthanolPrice(Number(e.target.value))}
+          />
+          <Form.Label>Gas Price</Form.Label>
+          <Form.Control
+            type="number"
+            value={gasPrice}
+            onChange={(e) => setGasPrice(Number(e.target.value))}
+          />
+        </Form.Group>
+        <Alert
+          show={resultWindow}
+          variant="success"
+          dismissible
+          onClose={() => setResultWindow(false)}
+        >
+          {result}
+        </Alert>
+        <Alert
+          show={errorWindow}
+          variant="danger"
+          dismissible
+          onClose={() => setErrorWindow(false)}
+        >
+          {error}
+        </Alert>
+        <Stack direction="horizontal" gap={3}>
+          <Button onClick={() => handleResult()}>Calculate</Button>
+          <Form.Group controlId="roadtripMode">
+            <Form.Check
+              type="switch"
+              label="Roadtrip Mode"
+              defaultChecked={roadtripMode}
+              checked={roadtripMode}
+              onChange={(e) => setRoadtripMode(e.target.checked)}
             />
           </Form.Group>
-          <Alert
-            show={resultWindow}
-            variant="success"
-            dismissible
-            onClose={() => setResultWindow(false)}
-          >
-            {result}
-          </Alert>
-          <Alert
-            show={errorWindow}
-            variant="danger"
-            dismissible
-            onClose={() => setErrorWindow(false)}
-          >
-            {error}
-          </Alert>
-          <Stack direction="horizontal" gap={3}>
-            <Button onClick={() => handleResult()}>Calculate</Button>
-            <Form.Group controlId="roadtripMode">
-              <Form.Check
-                type="switch"
-                label="Roadtrip Mode"
-                defaultChecked={roadtripMode}
-                checked={roadtripMode}
-                onChange={(e) => setRoadtripMode(e.target.checked)}
-              />
-            </Form.Group>
-          </Stack>
         </Stack>
-      </Container>
-    </div>
+      </Stack>
+    </Container>
   );
 };

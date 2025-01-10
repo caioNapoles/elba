@@ -67,6 +67,21 @@ class CarClass {
       return false;
     }
   }
+
+  returnKmCost = (fuelPrice: number, fuelType: string) => {
+    let consumption;
+    if (fuelType === "gas") {
+      consumption = this.gasCityConsumption;
+      return fuelPrice / consumption;
+    } else if (fuelType == "ethanol") {
+      consumption = this.ethanolCityConsumption;
+      return fuelPrice / consumption;
+    } else if (fuelType == "average") {
+      consumption = (this.gasCityConsumption + this.ethanolCityConsumption) / 2;
+      return fuelPrice / consumption;
+    }
+    return -1;
+  };
 }
 
 export default CarClass;

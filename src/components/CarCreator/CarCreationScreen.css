@@ -54,7 +54,7 @@ input[type=number] {
 
 .overTextForm {
     font-size: 0.8rem;
-    background-color: white;
+    background-color: var(--bs-body-bg);
     position: absolute;
     top: -.7rem;
     left: 1rem;
@@ -75,7 +75,7 @@ input[type=number] {
 
 .line {
     display: block;
-    border-top: #e0e4e7 solid 1px;
+    border-top: var(--bs-border-color) solid 1px;
 
 }
 

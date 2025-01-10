@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Button, Container, Form, Stack } from "react-bootstrap";
 import CarClass from "../../class/CarClass";
 import { Car, CircleHelp } from "lucide-react";
@@ -80,7 +80,7 @@ export const FuelPriceComparator = () => {
       if ((error as Error).message === "car is undefined") {
         setError("Please select a car!");
       }
-      
+
       setErrorWindow(true);
     }
   };

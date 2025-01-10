@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack, Form, Container } from "react-bootstrap";
 
 export const SettingsScreen = () => {

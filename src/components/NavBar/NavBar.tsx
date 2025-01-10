@@ -4,7 +4,7 @@ import { Stack, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { ComponentHub } from "./ComponentHub";
 
 const NavBar = () => {
-  const [screen, setScreen] = useState<number>(1);
+  const [screen, setScreen] = useState<number>(4);
 
   return (
     <Stack style={{ marginTop: "6rem" }}>

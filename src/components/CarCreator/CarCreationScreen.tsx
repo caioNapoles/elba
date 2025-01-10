@@ -57,6 +57,7 @@ const CarCreationScreen = () => {
                 <span className="overTextForm">City</span>
                 <Form.Control
                   className="rounded"
+                  placeholder="0"
                   type="number"
                   value={gasCityConsumption}
                   onChange={(e) =>

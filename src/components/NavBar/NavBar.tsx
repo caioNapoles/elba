@@ -7,7 +7,7 @@ const NavBar = () => {
   const [screen, setScreen] = useState<number>(1);
 
   return (
-    <Stack style={{ marginTop: "2rem" }}>
+    <Stack style={{ marginTop: "6rem" }}>
       <ComponentHub currentScreen={screen} />
       <ToggleButtonGroup
         type="radio"

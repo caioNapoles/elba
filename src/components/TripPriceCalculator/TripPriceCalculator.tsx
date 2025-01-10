@@ -52,10 +52,17 @@ const TripPriceCalculator = () => {
   const handleResult = () => {
     setErrorWindow(false);
     try {
-      setResult(calculateCost().toString());
+      const resultMessage =
+        "The cost of the trip is: $" + calculateCost().toString();
+      setResult(resultMessage);
       setResultWindow(true);
     } catch (error) {
       setError((error as Error).message);
+
+      if ((error as Error).message === "car is undefined") {
+        setError("Please select a car!");
+      }
+
       setErrorWindow(true);
     }
   };
@@ -65,17 +72,17 @@ const TripPriceCalculator = () => {
     const fuel =
       fuelChoice === 1 ? "gas" : fuelChoice === 2 ? "ethanol" : "average";
 
-    if (car.name === "Select a car") {
+    if (car.name == "Select a car") {
       throw new Error("Please select a car!");
     } else if (distance === 0 || fuelPrice === 0) {
       throw new Error("Please input the distance and price!");
     } else {
-      const cost = car.returnKmCost(fuelPrice, fuel);
+      const cost = distance * car.returnKmCost(fuelPrice, fuel);
 
       if (roundResult) {
-        return cost.toFixed(2);
+        return Math.round(cost).toString();
       } else {
-        return cost;
+        return cost.toFixed(2);
       }
     }
   };
@@ -128,14 +135,14 @@ const TripPriceCalculator = () => {
             defaultValue={1}
             onChange={(val: number) => setFuelChoice(val)}
           >
-            <ToggleButton variant="secondary" value={1} id="ethanol">
+            <ToggleButton variant="secondary" value={2} id="ethanol">
               Ethanol
-            </ToggleButton>
-            <ToggleButton variant="secondary" value={2} id="gas">
-              Gas
             </ToggleButton>
             <ToggleButton variant="secondary" value={3} id="average">
               Average
+            </ToggleButton>
+            <ToggleButton variant="secondary" value={1} id="gas">
+              Gas
             </ToggleButton>
           </ToggleButtonGroup>
         </Stack>
@@ -159,7 +166,7 @@ const TripPriceCalculator = () => {
         </Alert>
 
         <Stack direction="horizontal" gap={3}>
-          <Button onChange={() => handleResult()}>Calculate</Button>
+          <Button onClick={() => handleResult()}>Calculate</Button>
           <Form.Group controlId="round">
             <Form.Check
               type="switch"

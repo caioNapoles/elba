@@ -16,7 +16,6 @@ export const FuelPriceComparator = () => {
   const [resultWindow, setResultWindow] = useState<boolean>(false);
   const [error, setError] = useState("");
   const [errorWindow, setErrorWindow] = useState<boolean>(false);
-  
 
   useEffect(() => {
     const cars: CarClass[] = [];
@@ -77,6 +76,11 @@ export const FuelPriceComparator = () => {
       setResultWindow(true);
     } catch (error) {
       setError((error as Error).message);
+
+      if ((error as Error).message === "car is undefined") {
+        setError("Please select a car!");
+      }
+      
       setErrorWindow(true);
     }
   };
@@ -96,7 +100,7 @@ export const FuelPriceComparator = () => {
             value={carList.indexOf(currentCar)}
             onChange={(e) => handleSelect(e.target.value)}
           >
-            <option value="-1">Select a car</option>
+            <option>Select a car</option>
             {carList.map((car, index) => (
               <option key={index} value={index}>
                 {car.name}

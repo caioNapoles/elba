@@ -1,8 +1,8 @@
 import React from "react";
 import { FuelPriceComparator } from "../PriceComparator/FuelPriceComparator";
 import TripPriceCalculator from "../TripPriceCalculator/TripPriceCalculator";
-import SettingsScreen from "../SettingsScreen/SettingsScreen";
 import MyCars from "../CarCreator/MyCars";
+import SettingsScreen from "../SettingsScreen/SettingsScreen";
 
 interface ComponentHubProps {
   currentScreen: number;
@@ -18,5 +18,6 @@ export const ComponentHub: React.FC<ComponentHubProps> = (props) => {
   } else if (props.currentScreen == 4) {
     return <SettingsScreen />;
   }
+
   return null;
 };

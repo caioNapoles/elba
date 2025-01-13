@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Container, ListGroup, Stack } from "react-bootstrap";
+import { Button, Container, ListGroup, Offcanvas, Stack } from "react-bootstrap";
 import CarClass from "../../class/CarClass";
 import { Pencil, Trash, X } from "lucide-react";
 import CarCreationScreen from "./CarCreationScreen";
@@ -7,6 +7,9 @@ import CarCreationScreen from "./CarCreationScreen";
 const MyCars = () => {
   const [carList, setCarList] = useState<CarClass[]>([]);
   const [newCarScreen, setNewCarScreen] = useState(false);
+  const [showCarDeletionScreen, setShowCarDeletionScreen] = useState(false);
+  const [carToBeDeleted, setCarToBeDeleted] = useState("");
+  const [deleteCar, setDeleteCar] = useState(false);
 
   useEffect(() => {
     const cars: CarClass[] = [];
@@ -27,6 +30,21 @@ const MyCars = () => {
   const handleNewCarScreen = () => {
     setNewCarScreen(!newCarScreen);
   };
+
+  function handleCarDeletionScreen(name: string) {
+    setCarToBeDeleted(name);
+    setShowCarDeletionScreen(!showCarDeletionScreen);
+  }
+
+  const handleCarDeletionScreenNameless = () => {
+    setShowCarDeletionScreen(!showCarDeletionScreen);
+  }
+  
+  const handleCarDeletion = () => {
+    localStorage.removeItem(carToBeDeleted);
+    setShowCarDeletionScreen(false);
+    window.location.reload(false);
+  }
 
   if (newCarScreen) {
     return (
@@ -74,6 +92,7 @@ const MyCars = () => {
                   size="sm"
                   variant="outline-danger"
                   style={{ border: "none" }}
+                  onClick={() => handleCarDeletionScreen(car.name)}
                 >
                   <Trash size={16} />
                 </Button>
@@ -90,6 +109,21 @@ const MyCars = () => {
             </span>
           </ListGroup.Item>
         </ListGroup>
+        <Offcanvas show={showCarDeletionScreen} onHide={handleCarDeletionScreenNameless} placement="bottom">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Erase car</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <p>Are you sure you want to erase '{carToBeDeleted}'? &nbsp; 
+          <span style={{fontWeight: "600"}}>
+            This process cannot be undone.
+          </span></p>
+          <Stack direction="horizontal" gap={3}>
+            <Button variant="outline-danger" onClick={handleCarDeletion}>Erase car</Button>
+            <Button variant="secondary" onClick={handleCarDeletionScreenNameless}>Cancel</Button>
+          </Stack>
+        </Offcanvas.Body>
+      </Offcanvas>
       </Stack>
     </Container>
   );

@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import { Button, Container, ListGroup, Offcanvas, Stack } from "react-bootstrap";
 import CarClass from "../../class/CarClass";
-import { Pencil, Trash, X } from "lucide-react";
+import { Pencil, Trash } from "lucide-react";
 import CarCreationScreen from "./CarCreationScreen";
+import CarEditScreen from "./CarEditScreen";
 
 const MyCars = () => {
   const [carList, setCarList] = useState<CarClass[]>([]);
   const [newCarScreen, setNewCarScreen] = useState(false);
   const [showCarDeletionScreen, setShowCarDeletionScreen] = useState(false);
+  const [showCarEditScreen, setShowCarEditScreen] = useState(false); 
+  const [carToBeEdited, setCarToBeEdited] = useState("");
   const [carToBeDeleted, setCarToBeDeleted] = useState("");
-  const [deleteCar, setDeleteCar] = useState(false);
 
   useEffect(() => {
     const cars: CarClass[] = [];
@@ -31,9 +33,18 @@ const MyCars = () => {
     setNewCarScreen(!newCarScreen);
   };
 
+  function handleCarEditScreen(name: string) {
+    setCarToBeEdited(name);
+    setShowCarEditScreen(!showCarEditScreen);
+  }
+
   function handleCarDeletionScreen(name: string) {
     setCarToBeDeleted(name);
     setShowCarDeletionScreen(!showCarDeletionScreen);
+  }
+
+  const handleCarEditScreenNameless = () => {
+    setShowCarEditScreen(!showCarEditScreen);
   }
 
   const handleCarDeletionScreenNameless = () => {
@@ -43,34 +54,28 @@ const MyCars = () => {
   const handleCarDeletion = () => {
     localStorage.removeItem(carToBeDeleted);
     setShowCarDeletionScreen(false);
-    window.location.reload(false);
+    window.location.reload();
   }
 
-  if (newCarScreen) {
-    return (
-      <Stack>
-        <Container
-          style={{ display: "flex", marginTop: "-3rem", marginBottom: "0" }}
-        >
-          <Button
-            variant="outline-secondary"
-            size="sm"
-            style={{
-              border: "none",
-              alignItems: "center",
-              marginLeft: "auto",
-            }}
-            onClick={handleNewCarScreen}
-          >
-            <X size={32} />
-          </Button>
-        </Container>
-        <CarCreationScreen />
-      </Stack>
-    );
-  }
+  
   return (
     <Container>
+      <Offcanvas style={{paddingTop: "5rem"}} show={newCarScreen} onHide={handleNewCarScreen} placement="start" >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title><h1>New Car</h1></Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <CarCreationScreen />
+        </Offcanvas.Body>
+      </Offcanvas>
+      <Offcanvas style={{paddingTop: "5rem"}} show={showCarEditScreen} onHide={handleCarEditScreenNameless} placement="start" >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title><h1>Edit Car</h1></Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <CarEditScreen carName={carToBeEdited} />
+        </Offcanvas.Body>
+      </Offcanvas>
       <Stack gap={3}>
         <h1>My Cars</h1>
         <ListGroup>
@@ -84,6 +89,7 @@ const MyCars = () => {
                 variant="outline-secondary"
                 size="sm"
                 style={{ border: "none", marginLeft: ".5rem" }}
+                onClick={() => handleCarEditScreen(car.name)}
               >
                 <Pencil size={16} />
               </Button>

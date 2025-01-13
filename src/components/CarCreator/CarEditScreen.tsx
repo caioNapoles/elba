@@ -1,10 +1,14 @@
-import { useState } from "react";
-import { Button, Form, InputGroup, Alert, Container } from "react-bootstrap";
-import CarClass from "../../class/CarClass";
-import "./CarCreationScreen.css";
 
-const CarCreationScreen = () => {
-  const [carName, setCarName] = useState("");
+import { useEffect, useState } from "react";
+import { Form, InputGroup, Alert, Button, Container } from "react-bootstrap";
+import CarClass from "../../class/CarClass";
+
+interface CarEditScreenProps {
+  carName: string;
+}
+
+const CarEditScreen = (props: CarEditScreenProps) => {
+  const [carName, setCarName] = useState(props.carName);
   const [gasCityConsumption, setGasCityConsumption] = useState(0);
   const [gasHighwayConsumption, setGasHighwayConsumption] = useState(0);
   const [ethanolCityConsumption, setEthanolCityConsumption] = useState(0);
@@ -13,6 +17,19 @@ const CarCreationScreen = () => {
   const [alert, setAlert] = useState(false);
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    buildCarInfo();
+  }, []);
+
+  const buildCarInfo = () => {
+    const car = new CarClass();
+    car.getFromName(carName);
+    setGasCityConsumption(car.gasCityConsumption);
+    setGasHighwayConsumption(car.gasHighwayConsumption);
+    setEthanolCityConsumption(car.ethanolCityConsumption);
+    setEthanolHighwayConsumption(car.ethanolHighwayConsumption);
+  };
 
   const handleSubmit = () => {
     try {
@@ -23,10 +40,11 @@ const CarCreationScreen = () => {
         ethanolHighwayConsumption,
         ethanolCityConsumption
       );
+      newCar.delete();
       newCar.stringfyAndStore();
       console.log(newCar.name);
       setSuccessMessage(
-        "Registered the car '" + newCar.name + "' successfully!"
+        "Edited the car '" + newCar.name + "' successfully!"
       );
       setSuccess(true);
     } catch (e) {
@@ -43,8 +61,6 @@ const CarCreationScreen = () => {
     <Container>
       <div className="screen">
         <div className="carCreation">
-          
-
           <Form>
             <Form.Group className="mb-3" controlId="carName">
               <div className="carName">
@@ -148,4 +164,4 @@ const CarCreationScreen = () => {
   );
 };
 
-export default CarCreationScreen;
+export default CarEditScreen;

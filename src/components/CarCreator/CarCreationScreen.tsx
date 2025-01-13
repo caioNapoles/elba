@@ -11,6 +11,8 @@ const CarCreationScreen = () => {
   const [ethanolHighwayConsumption, setEthanolHighwayConsumption] = useState(0);
   const [error, setError] = useState("");
   const [alert, setAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubmit = () => {
     try {
@@ -23,6 +25,10 @@ const CarCreationScreen = () => {
       );
       newCar.stringfyAndStore();
       console.log(newCar.name);
+      setSuccessMessage(
+        "Registered the car '" + newCar.name + "' successfully!"
+      );
+      setSuccess(true);
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
@@ -112,6 +118,7 @@ const CarCreationScreen = () => {
               </InputGroup>
             </div>
           </Form>
+
           <Alert
             show={alert}
             variant="danger"
@@ -121,6 +128,17 @@ const CarCreationScreen = () => {
           >
             {error}
           </Alert>
+
+          <Alert
+            show={success}
+            variant="success"
+            dismissible
+            onClose={() => setSuccess(false)}
+            style={{ marginTop: "1rem", marginBottom: "-1rem", width: "100%" }}
+          >
+            {successMessage}
+          </Alert>
+
           <Button className="saveBtn" onClick={handleSubmit}>
             Save Car
           </Button>

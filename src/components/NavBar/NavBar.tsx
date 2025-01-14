@@ -4,7 +4,7 @@ import { Stack, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { ComponentHub } from "./ComponentHub";
 
 const NavBar = () => {
-  const [screen, setScreen] = useState<number>(4);
+  const [screen, setScreen] = useState<number>(3);
 
   return (
     <Stack style={{ marginTop: "6rem" }}>
@@ -12,7 +12,7 @@ const NavBar = () => {
       <ToggleButtonGroup
         type="radio"
         name="options"
-        defaultValue={1}
+        defaultValue={screen}
         onChange={(val: number) => setScreen(val)}
         style={{
           position: "fixed",

@@ -88,9 +88,16 @@ export const FuelPriceComparator = () => {
   return (
     <Container>
       <Stack gap={3}>
-        <Stack direction="horizontal" gap={3}>
+        <Stack
+          direction="horizontal"
+          gap={3}
+          style={{ alignItems: "start", display: "flex" }}
+        >
           <h1>Fuel Price Comparator</h1>
-          <Button variant="outline-secondary">
+          <Button
+            variant="outline-secondary"
+            style={{ border: "none", marginLeft: "auto", padding: ".5rem" }}
+          >
             <CircleHelp />
           </Button>
         </Stack>
@@ -108,20 +115,22 @@ export const FuelPriceComparator = () => {
             ))}
           </Form.Select>
         </Stack>
-        <Form.Group controlId="ethanolPrice">
-          <Form.Label>Ethanol Price</Form.Label>
-          <Form.Control
-            type="number"
-            value={ethanolPrice}
-            onChange={(e) => setEthanolPrice(Number(e.target.value))}
-          />
-          <Form.Label>Gas Price</Form.Label>
-          <Form.Control
-            type="number"
-            value={gasPrice}
-            onChange={(e) => setGasPrice(Number(e.target.value))}
-          />
-        </Form.Group>
+        <Stack gap={4}>
+          <Form.Group>
+            <Form.Label>Ethanol Price</Form.Label>
+            <Form.Control
+              type="number"
+              value={ethanolPrice}
+              onChange={(e) => setEthanolPrice(Number(e.target.value))}
+            />
+            <Form.Label>Gas Price</Form.Label>
+            <Form.Control
+              type="number"
+              value={gasPrice}
+              onChange={(e) => setGasPrice(Number(e.target.value))}
+            />
+          </Form.Group>
+        </Stack>
         <Alert
           show={resultWindow}
           variant="success"

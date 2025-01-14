@@ -82,6 +82,19 @@ class CarClass {
     }
     return -1;
   };
+
+  delete(){
+    localStorage.removeItem(this.name);
+  }
+
+  getFromName(name:string){
+    const carData = localStorage.getItem(name);
+    if (carData) {
+      this.readStringToCar(carData);
+    } else {
+      throw new Error(`No car found with the name: ${name}`);
+    }
+  }
 }
 
 export default CarClass;

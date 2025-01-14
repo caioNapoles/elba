@@ -90,9 +90,16 @@ const TripPriceCalculator = () => {
   return (
     <Container>
       <Stack gap={3}>
-        <Stack direction="horizontal" gap={3}>
+        <Stack
+          direction="horizontal"
+          gap={3}
+          style={{ alignItems: "start", display: "flex" }}
+        >
           <h1>Trip Cost Calculator</h1>
-          <Button variant="outline-secondary">
+          <Button
+            variant="outline-secondary"
+            style={{ border: "none", marginLeft: "auto", padding: ".5rem" }}
+          >
             <CircleHelp />
           </Button>
         </Stack>

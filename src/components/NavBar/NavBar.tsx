@@ -1,10 +1,17 @@
 import { Fuel, MapPinned, CarFront, Settings } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { ComponentHub } from "./ComponentHub";
+import SettingsClass from "../../class/SettingsClass";
 
 const NavBar = () => {
-  const [screen, setScreen] = useState<number>(3);
+  const [screen, setScreen] = useState<number>(1);
+
+  useEffect(() => {
+    const userSettings = new SettingsClass();
+    userSettings.read();
+    userSettings.applyTheme();
+  }, []);
 
   return (
     <Stack style={{ marginTop: "6rem" }}>

@@ -2,9 +2,19 @@ import { useEffect, useState } from "react";
 import { Alert, Button, Container, Form, Stack } from "react-bootstrap";
 import CarClass from "../../class/CarClass";
 import { Car, CircleHelp } from "lucide-react";
+import Toolkit from "../../class/Toolkit";
+import FuelPriceComparatorTextContent from "./FuelPriceComparatorTextContent";
 
 export const FuelPriceComparator = () => {
   const noCar = new CarClass();
+
+  const tools = new Toolkit();
+  const userSettings = tools.getCurrentSettings();
+  const textContent = new FuelPriceComparatorTextContent();
+  const language = userSettings.language;
+  userSettings.read();
+  textContent.setLanguage(language);
+
   noCar.name = "Select a car";
 
   const [carList, setCarList] = useState<CarClass[]>([]);
@@ -18,19 +28,9 @@ export const FuelPriceComparator = () => {
   const [errorWindow, setErrorWindow] = useState<boolean>(false);
 
   useEffect(() => {
-    const cars: CarClass[] = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key) {
-        const carString = localStorage.getItem(key);
-        const car = new CarClass();
-        car.readStringToCar(carString || "");
-        if (car) {
-          cars.push(car);
-        }
-      }
-    }
-    setCarList(cars);
+    setCarList(tools.getCarList());
+    userSettings.read();
+    textContent.setLanguage(language);
   }, []);
 
   const handleSelect = (eventKey: string | null) => {
@@ -43,9 +43,9 @@ export const FuelPriceComparator = () => {
   const calculateCost = () => {
     const car = currentCar;
     if (car.name === "Select a car") {
-      throw new Error("Please select a car!");
+      throw new Error(textContent.pleaseSelectACarException);
     } else if (ethanolPrice === 0 || gasPrice === 0) {
-      throw new Error("Please input the prices!");
+      throw new Error(textContent.pleaseInputPricesException);
     }
 
     let gasConsumption: number;
@@ -63,9 +63,9 @@ export const FuelPriceComparator = () => {
     console.log("kmCostEthanol " + ethanolKmCost);
 
     if (ethanolKmCost < gasKmCost) {
-      return "Ethanol is cheaper!";
+      return textContent.ethanolCheaper;
     } else {
-      return "Gas is cheaper!";
+      return textContent.gasCheaper;
     }
   };
 
@@ -78,7 +78,7 @@ export const FuelPriceComparator = () => {
       setError((error as Error).message);
 
       if ((error as Error).message === "car is undefined") {
-        setError("Please select a car!");
+        setError(textContent.pleaseSelectACarException);
       }
 
       setErrorWindow(true);
@@ -93,7 +93,7 @@ export const FuelPriceComparator = () => {
           gap={3}
           style={{ alignItems: "start", display: "flex" }}
         >
-          <h1>Fuel Price Comparator</h1>
+          <h1>{textContent.fuelPriceCalculator}</h1>
           <Button
             variant="outline-secondary"
             style={{ border: "none", marginLeft: "auto", padding: ".5rem" }}
@@ -107,7 +107,7 @@ export const FuelPriceComparator = () => {
             value={carList.indexOf(currentCar)}
             onChange={(e) => handleSelect(e.target.value)}
           >
-            <option>Select a car</option>
+            <option>{textContent.selectACar}</option>
             {carList.map((car, index) => (
               <option key={index} value={index}>
                 {car.name}
@@ -117,13 +117,13 @@ export const FuelPriceComparator = () => {
         </Stack>
         <Stack gap={4}>
           <Form.Group>
-            <Form.Label>Ethanol Price</Form.Label>
+            <Form.Label>{textContent.ethanolPrice}</Form.Label>
             <Form.Control
               type="number"
               value={ethanolPrice}
               onChange={(e) => setEthanolPrice(Number(e.target.value))}
             />
-            <Form.Label>Gas Price</Form.Label>
+            <Form.Label>{textContent.gasPrice}</Form.Label>
             <Form.Control
               type="number"
               value={gasPrice}
@@ -148,11 +148,13 @@ export const FuelPriceComparator = () => {
           {error}
         </Alert>
         <Stack direction="horizontal" gap={3}>
-          <Button onClick={() => handleResult()}>Calculate</Button>
+          <Button onClick={() => handleResult()}>
+            {textContent.calculate}
+          </Button>
           <Form.Group controlId="roadtripMode">
             <Form.Check
               type="switch"
-              label="Roadtrip Mode"
+              label={textContent.roadtripMode}
               defaultChecked={roadtripMode}
               checked={roadtripMode}
               onChange={(e) => setRoadtripMode(e.target.checked)}

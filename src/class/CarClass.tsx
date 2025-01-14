@@ -4,6 +4,7 @@ class CarClass {
   gasCityConsumption: number;
   ethanolHighwayConsumption: number;
   ethanolCityConsumption: number;
+  isCar: boolean = true;
 
   constructor(
     name: string = "",
@@ -95,6 +96,8 @@ class CarClass {
       throw new Error(`No car found with the name: ${name}`);
     }
   }
+
+  
 }
 
 export default CarClass;

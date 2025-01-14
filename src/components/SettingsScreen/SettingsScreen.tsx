@@ -1,60 +1,83 @@
 import { useEffect, useState } from "react";
 import { Stack, Form, Container } from "react-bootstrap";
+import SettingsClass from "../../class/SettingsClass";
+import SettingsScreenTextContent from "./SettingsScreenTextContent";
 
 export const SettingsScreen = () => {
-  const [language, setLanguage] = useState("1");
-  const [system, setSystem] = useState("1");
-  const [theme, setTheme] = useState("0");
+  const [language, setLanguage] = useState("");
+  const [system, setSystem] = useState("");
+  const [theme, setTheme] = useState("");
+  const [userSettings, setUserSettings] = useState(
+    new SettingsClass(language, system, theme)
+  );
+
+  const textContent = new SettingsScreenTextContent();
+  textContent.setLanguage(language);
 
   useEffect(() => {
-    if (theme == "1") {
-      document.querySelector("body")?.setAttribute("data-bs-theme", "light");
-    } else if (theme == "2") {
-      document.querySelector("body")?.setAttribute("data-bs-theme", "dark");
-    } else if (theme == "0") {
-      const prefersDarkMode = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      if (prefersDarkMode) {
-        document.querySelector("body")?.setAttribute("data-bs-theme", "dark");
-      } else {
-        document.querySelector("body")?.setAttribute("data-bs-theme", "light");
-      }
-    }
+    userSettings.read();
+    setLanguage(userSettings.language);
+    setSystem(userSettings.measurementSystem);
+    setTheme(userSettings.theme);
+    userSettings.applyTheme();
   });
+
+  function handleTheme(value: string) {
+    setTheme(value);
+    const newSettings = new SettingsClass(language, system, value);
+    newSettings.store();
+    setUserSettings(newSettings);
+  }
+
+  function handleSystem(value: string) {
+    setSystem(value);
+    const newSettings = new SettingsClass(language, value, theme);
+    newSettings.store();
+    setUserSettings(newSettings);
+  }
+
+  function handleLanguage(value: string) {
+    setLanguage(value);
+    const newSettings = new SettingsClass(value, system, theme);
+    newSettings.store();
+    setUserSettings(newSettings);
+  }
 
   return (
     <Container>
       <Stack gap={3}>
-        <h1>Settings</h1>
+        <h1>{textContent.settings}</h1>
         <Stack direction="horizontal" gap={3}>
-          <Form.Label>Language</Form.Label>
+          <Form.Label>{textContent.language}</Form.Label>
           <Form.Select
             value={language}
-            onChange={(e) => setLanguage(e.target.value)}
+            onChange={(e) => handleLanguage(e.target.value)}
           >
-            <option value="1">🇺🇸 English</option>
-            <option value="2">🇧🇷 Português Brasileiro</option>
+            <option value="0">🇺🇸 English</option>
+            <option value="1">🇧🇷 Português Brasileiro</option>
           </Form.Select>
         </Stack>
 
         <Stack direction="horizontal" gap={3}>
-          <Form.Label>Measurement System</Form.Label>
+          <Form.Label>{textContent.measurementSystem}</Form.Label>
           <Form.Select
             value={system}
-            onChange={(e) => setSystem(e.target.value)}
+            onChange={(e) => handleSystem(e.target.value)}
           >
-            <option value="1">Metric (km/L)</option>
-            <option value="2">Imperial (MPG)</option>
+            <option value="0">{textContent.metric}</option>
+            <option value="1">{textContent.imperial}</option>
           </Form.Select>
         </Stack>
 
         <Stack direction="horizontal" gap={3}>
-          <Form.Label>Theme</Form.Label>
-          <Form.Select value={theme} onChange={(e) => setTheme(e.target.value)}>
-            <option value="0">Follow system settings</option>
-            <option value="1">Light</option>
-            <option value="2">Dark</option>
+          <Form.Label>{textContent.theme}</Form.Label>
+          <Form.Select
+            value={theme}
+            onChange={(e) => handleTheme(e.target.value)}
+          >
+            <option value="0">{textContent.useSystemSettings}</option>
+            <option value="1">{textContent.light}</option>
+            <option value="2">{textContent.dark}</option>
           </Form.Select>
         </Stack>
       </Stack>

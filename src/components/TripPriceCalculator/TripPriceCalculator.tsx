@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import CarClass from "../../class/CarClass";
 import { useEffect, useState } from "react";
+import Toolkit from "../../class/Toolkit";
 
 const TripPriceCalculator = () => {
   const noCar = new CarClass();
@@ -27,19 +28,8 @@ const TripPriceCalculator = () => {
   const [fuelChoice, setFuelChoice] = useState(1);
 
   useEffect(() => {
-    const cars: CarClass[] = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key) {
-        const carString = localStorage.getItem(key);
-        const car = new CarClass();
-        car.readStringToCar(carString || "");
-        if (car) {
-          cars.push(car);
-        }
-      }
-    }
-    setCarList(cars);
+    const tools = new Toolkit();
+    setCarList(tools.getCarList());
   }, []);
 
   const handleSelect = (eventKey: string | null) => {

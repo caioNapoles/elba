@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Form, InputGroup, Alert, Container } from "react-bootstrap";
 import CarClass from "../../class/CarClass";
 import "./CarCreationScreen.css";
+import Toolkit from "../../class/Toolkit";
+import CarCreationEditTextContent from "./CarCreationEditTextContent";
 
 const CarCreationScreen = () => {
   const [carName, setCarName] = useState("");
@@ -13,6 +15,18 @@ const CarCreationScreen = () => {
   const [alert, setAlert] = useState(false);
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+
+  const tools = new Toolkit();
+  const userSettings = tools.getCurrentSettings();
+  const textContent = new CarCreationEditTextContent();
+  const language = userSettings.language;
+  userSettings.read();
+  textContent.setLanguage(language);
+
+  useEffect(() => {
+      userSettings.read();
+      textContent.setLanguage(language);
+    }, []);
 
   const handleSubmit = () => {
     try {
@@ -26,7 +40,7 @@ const CarCreationScreen = () => {
       newCar.stringfyAndStore();
       console.log(newCar.name);
       setSuccessMessage(
-        "Registered the car '" + newCar.name + "' successfully!"
+        textContent.success1 + newCar.name + textContent.success2
       );
       setSuccess(true);
     } catch (e) {
@@ -48,19 +62,19 @@ const CarCreationScreen = () => {
           <Form>
             <Form.Group className="mb-3" controlId="carName">
               <div className="carName">
-                <span className="overTextForm">Car Name</span>
+                <span className="overTextForm">{textContent.carName}</span>
                 <Form.Control
-                  placeholder="Mom's Civic"
+                  placeholder={textContent.namePlaceholder}
                   value={carName}
                   onChange={(e) => setCarName(e.target.value)}
                 />
               </div>
             </Form.Group>
             <span className="line"></span>
-            <Form.Label className="mt-2">Gas Consumption</Form.Label>
+            <Form.Label className="mt-2">{textContent.gasConsupmtion}</Form.Label>
             <div className="input-with-unit">
               <InputGroup className="mt-2">
-                <span className="overTextForm">City</span>
+                <span className="overTextForm">{textContent.city}</span>
                 <Form.Control
                   className="rounded"
                   placeholder="0"
@@ -75,7 +89,7 @@ const CarCreationScreen = () => {
             </div>
             <div className="input-with-unit mt-2">
               <InputGroup className="mt-3">
-                <span className="overTextForm">Highway</span>
+                <span className="overTextForm">{textContent.highway}</span>
 
                 <Form.Control
                   className="rounded"
@@ -88,10 +102,10 @@ const CarCreationScreen = () => {
                 <span className="unit">km/L</span>
               </InputGroup>
             </div>
-            <Form.Label className="mt-3">Ethanol Consumption</Form.Label>
+            <Form.Label className="mt-3">{textContent.ethanolConsumption}</Form.Label>
             <div className="input-with-unit">
               <InputGroup className="mt-3">
-                <span className="overTextForm">City</span>
+                <span className="overTextForm">{textContent.city}</span>
                 <Form.Control
                   className="rounded"
                   type="number"
@@ -105,7 +119,7 @@ const CarCreationScreen = () => {
             </div>
             <div className="input-with-unit mt-2">
               <InputGroup className="mt-3">
-                <span className="overTextForm">Highway</span>
+                <span className="overTextForm">{textContent.highway}</span>
                 <Form.Control
                   className="rounded"
                   type="number"
@@ -140,7 +154,7 @@ const CarCreationScreen = () => {
           </Alert>
 
           <Button className="saveBtn" onClick={handleSubmit}>
-            Save Car
+          {textContent.save}
           </Button>
         </div>
       </div>

@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { Form, InputGroup, Alert, Button, Container } from "react-bootstrap";
 import CarClass from "../../class/CarClass";
+import Toolkit from "../../class/Toolkit"; 
+import CarCreationEditTextContent from "./CarCreationEditTextContent";
 
 interface CarEditScreenProps {
   carName: string;
@@ -18,8 +20,17 @@ const CarEditScreen = (props: CarEditScreenProps) => {
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  const tools = new Toolkit();
+  const userSettings = tools.getCurrentSettings();
+  const textContent = new CarCreationEditTextContent();
+  const language = userSettings.language;
+  userSettings.read();
+  textContent.setLanguage(language);
+
   useEffect(() => {
     buildCarInfo();
+    userSettings.read();
+    textContent.setLanguage(language);
   }, []);
 
   const buildCarInfo = () => {
@@ -44,7 +55,7 @@ const CarEditScreen = (props: CarEditScreenProps) => {
       newCar.stringfyAndStore();
       console.log(newCar.name);
       setSuccessMessage(
-        "Edited the car '" + newCar.name + "' successfully!"
+        textContent.success3 + newCar.name + textContent.success4
       );
       setSuccess(true);
     } catch (e) {
@@ -61,22 +72,24 @@ const CarEditScreen = (props: CarEditScreenProps) => {
     <Container>
       <div className="screen">
         <div className="carCreation">
+          
+
           <Form>
             <Form.Group className="mb-3" controlId="carName">
               <div className="carName">
-                <span className="overTextForm">Car Name</span>
+                <span className="overTextForm">{textContent.carName}</span>
                 <Form.Control
-                  placeholder="Mom's Civic"
+                  placeholder={textContent.namePlaceholder}
                   value={carName}
                   onChange={(e) => setCarName(e.target.value)}
                 />
               </div>
             </Form.Group>
             <span className="line"></span>
-            <Form.Label className="mt-2">Gas Consumption</Form.Label>
+            <Form.Label className="mt-2">{textContent.gasConsupmtion}</Form.Label>
             <div className="input-with-unit">
               <InputGroup className="mt-2">
-                <span className="overTextForm">City</span>
+                <span className="overTextForm">{textContent.city}</span>
                 <Form.Control
                   className="rounded"
                   placeholder="0"
@@ -91,7 +104,7 @@ const CarEditScreen = (props: CarEditScreenProps) => {
             </div>
             <div className="input-with-unit mt-2">
               <InputGroup className="mt-3">
-                <span className="overTextForm">Highway</span>
+                <span className="overTextForm">{textContent.highway}</span>
 
                 <Form.Control
                   className="rounded"
@@ -104,10 +117,10 @@ const CarEditScreen = (props: CarEditScreenProps) => {
                 <span className="unit">km/L</span>
               </InputGroup>
             </div>
-            <Form.Label className="mt-3">Ethanol Consumption</Form.Label>
+            <Form.Label className="mt-3">{textContent.ethanolConsumption}</Form.Label>
             <div className="input-with-unit">
               <InputGroup className="mt-3">
-                <span className="overTextForm">City</span>
+                <span className="overTextForm">{textContent.city}</span>
                 <Form.Control
                   className="rounded"
                   type="number"
@@ -121,7 +134,7 @@ const CarEditScreen = (props: CarEditScreenProps) => {
             </div>
             <div className="input-with-unit mt-2">
               <InputGroup className="mt-3">
-                <span className="overTextForm">Highway</span>
+                <span className="overTextForm">{textContent.highway}</span>
                 <Form.Control
                   className="rounded"
                   type="number"
@@ -156,7 +169,7 @@ const CarEditScreen = (props: CarEditScreenProps) => {
           </Alert>
 
           <Button className="saveBtn" onClick={handleSubmit}>
-            Save Car
+          {textContent.save}
           </Button>
         </div>
       </div>

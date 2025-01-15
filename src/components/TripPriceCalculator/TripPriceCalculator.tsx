@@ -12,7 +12,6 @@ import CarClass from "../../class/CarClass";
 import { useEffect, useState } from "react";
 import Toolkit from "../../class/Toolkit";
 import TripPriceCalculatorTextContent from "./TripPriceCalculatorTextContent";
-import { text } from "stream/consumers";
 
 const TripPriceCalculator = () => {
   const noCar = new CarClass();

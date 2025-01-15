@@ -11,6 +11,7 @@ import { Pencil, Trash } from "lucide-react";
 import CarCreationScreen from "./CarCreationScreen";
 import CarEditScreen from "./CarEditScreen";
 import Toolkit from "../../class/Toolkit";
+import MyCarsTextContent from "./MyCarsTextContent";
 
 const MyCars = () => {
   const [carList, setCarList] = useState<CarClass[]>([]);
@@ -20,9 +21,17 @@ const MyCars = () => {
   const [carToBeEdited, setCarToBeEdited] = useState("");
   const [carToBeDeleted, setCarToBeDeleted] = useState("");
 
+  const tools = new Toolkit();
+  const userSettings = tools.getCurrentSettings();
+  const textContent = new MyCarsTextContent();
+  const language = userSettings.language;
+  userSettings.read();
+  textContent.setLanguage(language);
+
   useEffect(() => {
-    const tools = new Toolkit();
     setCarList(tools.getCarList());
+    userSettings.read();
+    textContent.setLanguage(language);
   }, []);
 
   const handleNewCarScreen = () => {
@@ -63,7 +72,7 @@ const MyCars = () => {
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
-            <h1>New Car</h1>
+            <h1>{textContent.newCar}</h1>
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
@@ -78,7 +87,7 @@ const MyCars = () => {
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
-            <h1>Edit Car</h1>
+            <h1>{textContent.editCar}</h1>
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
@@ -86,7 +95,7 @@ const MyCars = () => {
         </Offcanvas.Body>
       </Offcanvas>
       <Stack gap={3}>
-        <h1>My Cars</h1>
+        <h1>{textContent.myCars}</h1>
         <ListGroup>
           {carList.map((car, index) => (
             <ListGroup.Item
@@ -120,7 +129,7 @@ const MyCars = () => {
               style={{ textDecoration: "underline" }}
               onClick={handleNewCarScreen}
             >
-              Add Car
+              {textContent.addCar}
             </span>
           </ListGroup.Item>
         </ListGroup>
@@ -130,24 +139,24 @@ const MyCars = () => {
           placement="bottom"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Erase car</Offcanvas.Title>
+            <Offcanvas.Title>{textContent.eraseCar}</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             <p>
-              Are you sure you want to erase '{carToBeDeleted}'? &nbsp;
+              {textContent.confirmEraseCar} '{carToBeDeleted}'? &nbsp;
               <span style={{ fontWeight: "600" }}>
-                This process cannot be undone.
+              {textContent.thisActionUndone}
               </span>
             </p>
             <Stack direction="horizontal" gap={3}>
               <Button variant="outline-danger" onClick={handleCarDeletion}>
-                Erase car
+              {textContent.eraseCar}
               </Button>
               <Button
                 variant="secondary"
                 onClick={handleCarDeletionScreenNameless}
               >
-                Cancel
+                {textContent.cancel}
               </Button>
             </Stack>
           </Offcanvas.Body>

@@ -10,6 +10,8 @@ interface CarEditScreenProps {
 }
 
 const CarEditScreen = (props: CarEditScreenProps) => {
+  const carTemp = new CarClass();
+  carTemp.name = props.carName;
   const [carName, setCarName] = useState(props.carName);
   const [gasCityConsumption, setGasCityConsumption] = useState(0);
   const [gasHighwayConsumption, setGasHighwayConsumption] = useState(0);
@@ -51,7 +53,7 @@ const CarEditScreen = (props: CarEditScreenProps) => {
         ethanolHighwayConsumption,
         ethanolCityConsumption
       );
-      newCar.delete();
+      carTemp.delete();
       newCar.stringfyAndStore();
       console.log(newCar.name);
       setSuccessMessage(

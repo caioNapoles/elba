@@ -50,16 +50,18 @@ const MyCars = () => {
 
   const handleCarEditScreenNameless = () => {
     setShowCarEditScreen(!showCarEditScreen);
+    setCarList(tools.getCarList());
   };
 
   const handleCarDeletionScreenNameless = () => {
     setShowCarDeletionScreen(!showCarDeletionScreen);
+    setCarList(tools.getCarList());
   };
 
   const handleCarDeletion = () => {
     localStorage.removeItem(carToBeDeleted);
     setShowCarDeletionScreen(false);
-    window.location.reload();
+    setCarList(tools.getCarList());
   };
 
   return (

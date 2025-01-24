@@ -23,6 +23,10 @@ class Toolkit {
     settings.read();
     return settings
   }
+
+  refreshPage(){
+    window.location.reload();
+  }
 }
 
 export default Toolkit;

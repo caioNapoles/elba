@@ -1,9 +1,9 @@
 {
   "name": "elba",
-  "private": true,
+  "private": "true",
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://caioNapoles.github.io/elba",
+   "homepage": "https://caioNapoles.github.io/elba",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

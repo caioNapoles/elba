@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: '/elba/',
+  base: 'https://caionapoles.github.io/elba/',
   plugins: [
     react(),
     VitePWA({
